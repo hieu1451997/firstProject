@@ -10,6 +10,12 @@ use App\MonTT;
 use App\User;
 use Hash;
 use Auth;
+
+use App\Cart; 
+use Session;
+use App\KhachHang;
+use App\HoaDon;
+use App\ChiTietHoaDon;
 class PageController extends Controller
 {
     public function getIndex(){
@@ -41,7 +47,47 @@ class PageController extends Controller
     }
 
     public function getCheckout(){
-        return view('Page.checkout');
+       
+            $oldCart = Session::get('cart');
+            $cart = new Cart($oldCart);
+        
+            return view('Page.checkout',['product_cart'=>$cart->items,'totalPrice'=>$cart->totalPrice,'totalQty'=>$cart->totalQty]); 
+   
+
+    }
+
+    public function postCheckout(Request $req){
+        $cart = Session::get('cart');
+
+        $khachhang = new KhachHang;
+        $khachhang->HoTen = $req->HoTen;
+        $khachhang->email = $req->email;
+        $khachhang->Diachi = $req->Diachi;
+        $khachhang->sdt = $req->sdt;
+        $khachhang->save();
+
+        $hoadon = new HoaDon;
+        $hoadon->ID_KH = $khachhang->id;
+        $hoadon->NgayDatHang = date('Y-m-d');
+        $hoadon->TongTien = $cart->totalPrice;
+        $hoadon->save();
+
+        foreach ($cart->items as $key => $value) {
+            $chitiethoadon = new ChiTietHoaDon;
+            $chitiethoadon->ID_HD = $hoadon->id;
+            $chitiethoadon->ID_SP = $key;
+            $chitiethoadon->SoLuong = $value['qty'];
+            $chitiethoadon->DonGia = $value['price']/$value['qty'];
+            $chitiethoadon->save();
+        }
+
+        Session::forget('cart');
+        return redirect()->back();
+    }
+
+    public function getSearch(Request $req){
+        $product = SanPham::where('TenSp','like','%'.$req->key.'%')->paginate(6);
+        return view('Page.search',compact('product'));
     }
 
     public function getLienhe(){
@@ -50,7 +96,25 @@ class PageController extends Controller
     public function getGioithieu(){
         return view('Page.gioithieu');
     }
+
+    public function getAddtoCart(Request $req,$id){
+        $product = SanPham::find($id);
+        $oldCart = Session('cart')?Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        $cart->add($product,$id);
+        $req->session()->put('cart',$cart);
+        return redirect()->back();
+
+    }
     
+    public function getDelItemCart($id){
+        $oldCart = Session::has('cart')?Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        $cart->removeItem($id);
+        Session::put('cart',$cart);
+        return redirect()->back();
+    }
+
 
     public function postSingin(Request $req){
         $this->validate($req,
@@ -76,25 +140,20 @@ class PageController extends Controller
         return redirect()->back()->with('thanhcong','Tạo tài khoản thành công');
     }
 
-    
+    public function getLogin(){
+        return view('Page.dangnhap');
+    }
 
     public function postLogin(Request $req){
-        $this->validate($req,
-                [
-                    'email'=>'required|email|unique:users,email',
-                    'password'=>'required|min:6|max:20'
-                    
-                ],
-                [
-                    'email.required'=>'Vui lòng nhập email',
-                    'email.email'=>'không đúng định dạng email',
-                    'password.min'=>'mật khẩu ít nhất 6 kí tự'
-                ]);
-        $credentials = array('email'=>$req->email,'password'=>$req->password);
-        if(Auth::attempt($credentials)){
-            return view('Admin.admin');
+        $mon_tt=MonTT::all();
+       
+        $cre = array('email'=>$req->email,'password'=>$req->password);
+        if(Auth::attempt($cre))
+        {
+             return view('Admin.admin',compact('mon_tt'));
         }
-        else return view('Admin.admin');       
+        else return view('Page.lienhe');
+         
     }
     
     

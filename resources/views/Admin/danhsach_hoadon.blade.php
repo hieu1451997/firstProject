@@ -16,7 +16,6 @@
                                 <th>ID_KH</th>
                                 <th>Ngày đặt</th>
                                 <th>Tổng tiền</th>
-                                <th>Thanh toán</th>
                                 <th>Note</th>
                                 <th>Xóa</th>
                                 <th>Sửa</th>
@@ -29,7 +28,7 @@
                                 <td>{{$hd->ID_KH}}</td>
                                 <td>{{$hd->NgayDatHang}}</td>
                                 <td>{{$hd->TongTien}}$</td>
-                                <td>{{$hd->Payment}}</td>
+                                
                                 <td>{{$hd->Note}}</td>
                                 
                                 <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>

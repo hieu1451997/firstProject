@@ -23,7 +23,7 @@
 						</li>
 					
 							<li class="text-center border-right text-white">
-							<a href="#" data-toggle="modal" data-target="#exampleModal" class="text-white">
+							<a href="{{route('login')}}"  class="text-white">
 								<i class="fas fa-sign-in-alt mr-2"></i> Đăng nhập </a>
 							</li>
 							<li class="text-center text-white">
@@ -43,44 +43,7 @@
 
 	<!-- modals -->
 	<!-- log in -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title text-center">Đăng nhập</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form action="{{route('login')}}" method="post">
-						<input type="hidden" name="_token" value="{{csrf_token()}}">
-						<div class="form-group">
-							<label class="col-form-label">Tài khoản</label>
-							<input type="text" class="form-control" placeholder=" " name="email" required="">
-						</div>
-						<div class="form-group">
-							<label class="col-form-label">Mật khẩu</label>
-							<input type="password" class="form-control" placeholder=" " name="password" required="">
-						</div>
-						<div class="right-w3l">
-							<input type="submit" class="form-control" value="Đăng nhập">
-						</div>
-						<div class="sub-w3l">
-							<div class="custom-control custom-checkbox mr-sm-2">
-								<input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-								<label class="custom-control-label" for="customControlAutosizing">Nhớ tài khoản ?</label>
-							</div>
-						</div>
-						<p class="text-center dont-do mt-3">Chưa có tài khoản?
-							<a href="#" data-toggle="modal" data-target="#exampleModal2">
-								Đăng kí ngay </a>
-						</p>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<!-- register -->
 	<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -156,26 +119,61 @@
 					<div class="row">
 						<!-- search -->
 						<div class="col-10 agileits_search">
-							<form class="form-inline" action="#" method="post">
-								<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required>
+							<form class="form-inline" action="{{route('search')}}" method="get">
+								<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required name="key">
 								<button class="btn my-2 my-sm-0" type="submit">Tìm kiếm</button>
 							</form>
 						</div>
 						<!-- //search -->
 						<!-- cart details -->
-						<div class="col-2 top_nav_right text-center mt-sm-0 mt-2">
-							<div class="wthreecartaits wthreecartaits2 cart cart box_1">
-								<form action="#" method="post" class="last">
-									<input type="hidden" name="cmd" value="_cart">
-									<input type="hidden" name="display" value="1">
-									<button class="btn w3view-cart" type="submit" name="submit" value="">
-										<i class="fas fa-cart-arrow-down"></i>
-									</button>
-								</form>
-							</div>
+						
+							
+						<div class="beta-comp">
+							@if(Session::has('cart'))
+							<div class="cart">
+								<div class="beta-select"><i class="fa fa-shopping-cart"></i> (@if(Session::has('cart')){{Session('cart')->totalQty}} @else Trống @endif) <i class="fa fa-chevron-down"></i></div>
+								<div class="beta-dropdown cart-body">
+								
+								@foreach($product_cart as $product)
+								<div class="cart-item">
+									<a class="cart-item-delete" href="{{route('xoagiohang',$product['item']['ID'])}}" ><i class="fa fa-times"></i></a>
+									<div class="media">
+										<a class="pull-left" href="#"><img src="source/images/{{$product['item']['img']}}" alt=""></a>
+										<div class="media-body">
+											<span class="cart-item-title">{{$product['item']['TenSp']}}</span>
+											
+											<span class="cart-item-amount">{{$product['qty']}}*
+												@if($product['item']['Gia_KM']==0)
+												<span>{{$product['item']['DonGia']}}</span>
+												@else
+												<span>{{$product['item']['Gia_KM']}}</span>
+												@endif
+
+											</span>
+										</div>
+									</div>
+								</div>
+								@endforeach
+								
+								
+
+								<div class="cart-caption">
+									<div class="cart-total text-right">Tổng tiền: <span class="cart-total-value">{{Session('cart')->totalPrice}} USD</span></div>
+									<div class="clearfix"></div>
+
+									<div class="center">
+										<div class="space10">&nbsp;</div>
+										<a href="{{route('dathang')}}" class="beta-btn primary text-center">Đặt hàng <i class="fa fa-chevron-right"></i></a>
+									</div>
+								</div>
+								</div>
+							</div> <!-- .cart -->
+							@endif
 						</div>
-						<!-- //cart details -->
+							
 					</div>
+						<!-- //cart details -->
+					
 				</div>
 			</div>
 		</div>

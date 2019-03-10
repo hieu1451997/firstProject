@@ -23,7 +23,8 @@
 	<!-- Custom-Files -->
 	<link href="source/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 	<!-- Bootstrap css -->
-	<link href="source/css/Style.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="source/css/Styles.css" rel=" stylesheet" type="text/css" media="all" />
+	<link href="source/css/styless.css" rel=" stylesheet" type="text/css" media="all" />
 	<!-- Main css -->
 	<link rel="stylesheet" href="source/css/fontawesome-all.css">
 	<!-- Font-Awesome-Icons-CSS -->
@@ -91,6 +92,7 @@
 	<!-- //popup modal (for location)-->
 
 	<!-- cart-js -->
+	<!--
 	<script src="source/js/minicart.js"></script>
 	<script>
 		paypals.minicarts.render(); 
@@ -112,6 +114,7 @@
 			}
 		});
 	</script>
+	-->
 	<!-- //cart-js -->
 
 	<!-- password-script -->
@@ -139,6 +142,7 @@
 
 	<!-- smoothscroll -->
 	<script src="source/js/SmoothScroll.min.js"></script>
+	<script src="source/js/scripts.min.js"></script>
 	<!-- //smoothscroll -->
 
 	<!-- start-smooth-scrolling -->
@@ -179,6 +183,11 @@
 	<!-- for bootstrap working -->
 	<script src="source/js/bootstrap.js"></script>
 	<!-- //for bootstrap working -->
+	<script src="source/js/jquery.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+	<script src="source/js/jquery.colorbox-min.js"></script>
+	<script src="source/js/dug.js"></script>
+	<script src="source/js/scripts.min.js"></script>
 	<!-- //js-files -->
 </body>
 

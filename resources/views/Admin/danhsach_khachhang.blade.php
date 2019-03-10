@@ -14,7 +14,7 @@
                             <tr align="center">
                                 <th>ID</th>
                                 <th>Tên KH</th>
-                                <th>Giới tính</th>
+                               
                                 <th>Email</th>
                                 <th>Địa chỉ</th>
                                 <th>SĐT</th>
@@ -28,7 +28,7 @@
                             <tr class="odd gradeX" align="center">
                                 <td>{{$kh->ID}}</td>
                                 <td>{{$kh->HoTen}}</td>
-                                <td>{{$kh->GioiTinh}}</td>
+                                
                                 <td>{{$kh->email}}</td>
                                 <td>{{$kh->Diachi}}</td>
                                 <td>{{$kh->sdt}}</td>

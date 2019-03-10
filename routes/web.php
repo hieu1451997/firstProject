@@ -29,15 +29,8 @@ Route::get('chi-tiet-san-pham/{id}',[
 	'uses'=>'PageController@getChitiet'
 ]);
 
-Route::get('checkout',[
-	'as'=>'checkout',
-	'uses'=>'PageController@getCheckout'
-]);
 
-Route::post('checkout',[
-	'as'=>'checkout',
-	'uses'=>'PageController@postCheckout'
-]);
+
 
 Route::get('gioi-thieu',[
 	'as'=>'gioithieu',
@@ -52,12 +45,36 @@ Route::post('dang-ki',[
 	'as'=>'singin',
 	'uses'=>'PageController@postSingin'
 ]);
-
+Route::get('dang-nhap',[
+	'as'=>'login',
+	'uses'=>'PageController@getLogin'
+]);
 Route::post('dang-nhap',[
 	'as'=>'login',
 	'uses'=>'PageController@postLogin'
 ]);
+Route::get('add-to-cart/{id}',[
+	'as'=>'themgiohang',
+	'uses'=>'PageController@getAddtoCart'
+]);
+Route::get('del-cart/{id}',[
+	'as'=>'xoagiohang',
+	'uses'=>'PageController@getDelItemCart'
+]);
 
+Route::get('dat-hang',[
+	'as'=>'dathang',
+	'uses'=>'PageController@getCheckout'
+]);
+Route::post('dat-hang',[
+	'as'=>'dathang',
+	'uses'=>'PageController@postCheckout'
+]);
+
+Route::get('search}',[
+	'as'=>'search',
+	'uses'=>'PageController@getSearch'
+]);
 
 
 
